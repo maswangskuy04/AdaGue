@@ -8,10 +8,20 @@ const userRoutes = require('./routes/userRoute')
 const chatRoutes = require('./routes/chatRoute')
 const matchRoutes = require('./routes/matchRoute')
 
-app.use(cors())
+const allowedOrigins = [
+    'https://ada-gue.vercel.app'
+]
+
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true
+}))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+app.use('/', (req, res) => {
+    res.send('API running...')
+})
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/chat', chatRoutes)

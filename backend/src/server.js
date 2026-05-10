@@ -1,8 +1,16 @@
+require('dotenv').config()
 const http = require('http')
 const app = require('./app')
 const sequelize = require('./config/db')
 const { Server } = require('socket.io')
 const initSocket = require('./socket')
+
+const PORT = process.env.PORT || 5000
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://ada-gue.vercel.app'
+]
 
 async function start() {
     try {
@@ -12,18 +20,18 @@ async function start() {
         const server = http.createServer(app)
         const io = new Server(server, {
             cors: {
-                origin: '*',
+                origin: allowedOrigins,
                 credentials: true
             }
         })
 
         initSocket(io)
     
-        server.listen(process.env.PORT_SERVER, '0.0.0.0', () => {
-            console.log(`Server running on http://0.0.0.0:${process.env.PORT_SERVER}`)
+        server.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`)
         })
     } catch (err) {
-        console.error(err)
+        console.error('Server failed: ', err)
     }
 }
 
