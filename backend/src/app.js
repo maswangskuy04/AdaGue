@@ -1,0 +1,31 @@
+require('dotenv').config()
+const express = require('express')
+const cors = require('cors')
+const app = express()
+
+const authRoutes = require('./routes/authRoute')
+const userRoutes = require('./routes/userRoute')
+const chatRoutes = require('./routes/chatRoute')
+const matchRoutes = require('./routes/matchRoute')
+
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
+app.use('/api/chat', chatRoutes)
+app.use('/api/match', matchRoutes)
+
+app.use((err, req, res, next) => {
+    console.error(err)
+
+    const status = err.status || 500
+    const message = err.message
+
+    res.status(status).json({
+        message
+    })
+})
+
+module.exports = app
