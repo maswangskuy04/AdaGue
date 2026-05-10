@@ -9,6 +9,7 @@ const chatRoutes = require('./routes/chatRoute')
 const matchRoutes = require('./routes/matchRoute')
 
 const allowedOrigins = [
+    'http://localhost:5173',
     'https://ada-gue.vercel.app'
 ]
 
