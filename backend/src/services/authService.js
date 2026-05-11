@@ -8,8 +8,12 @@ const generateOtp = require("../utils/generateOtp");
 class AuthService {
     static async register({ fullname, email, password }) {
         const exists = await User.findOne({ where: { email } })
+
         if (exists) {
-            throw { status: 400, message: 'Email already registered' }
+            throw {
+                status: 400,
+                message: 'Email already registered'
+            }
         }
 
         const otp = generateOtp()
@@ -23,9 +27,15 @@ class AuthService {
             emailOtpExpiredAt: new Date(Date.now() + 10 * 60 * 1000)
         })
 
-        await sendOtpEmail(email, otp)
+        try {
+            await sendOtpEmail(email, otp)
+        } catch (err) {
+            console.error('EMAIL ERROR:', err)
+        }
 
-        return { message: "OTP code has been successfully sent" }
+        return {
+            message: "OTP code has been successfully sent"
+        }
     }
 
     static async login({ email, password }) {
