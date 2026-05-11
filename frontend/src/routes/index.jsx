@@ -7,7 +7,7 @@ import AdminLayout from "../layouts/AdminLayout"
 
 import Login from "../pages/auth/Login"
 import Register from "../pages/auth/Register"
-// import HomeUser from "../pages/user"
+import HomeUser from "../pages/user/home/HomeUser"
 import Forbidden from "../pages/errors/Forbidden"
 import NotFound from "../pages/errors/NotFound"
 // import ChatRoom from "../pages/user"
@@ -25,35 +25,35 @@ const router = createBrowserRouter([
           { path: "/auth/verify-otp", element: <VerifyOtpPage /> },
         ]
       },
-      // {
-      //   element: <ProtectedRoute />,
-      //   children: [
-      //     {
-      //       element: <RoleRoute allowed={["user"]} />,
-      //       children: [
-      //         {
-      //           element: <UserLayout />,
-      //           children: [
-      //             { path: "/dashboard", element: <HomeUser /> },
-      //             { path: "/profile", element: <ProfilePage /> },
-      //             { path: "/chat/:conversationId", element: <ChatRoom /> }
-      //           ]
-      //         }
-      //       ]
-      //     },
-      //     {
-      //       element: <RoleRoute allowed={["admin"]} />,
-      //       children: [
-      //         {
-      //           element: <AdminLayout />,
-      //           children: [
-      //             { path: "/admin/dashboard", element: <HomeAdmin /> }
-      //           ]
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            element: <RoleRoute allowed={["user"]} />,
+            children: [
+              {
+                element: <UserLayout />,
+                children: [
+                  { path: "/dashboard", element: <HomeUser /> },
+                  // { path: "/profile", element: <ProfilePage /> },
+                  // { path: "/chat/:conversationId", element: <ChatRoom /> }
+                ]
+              }
+            ]
+          },
+          // {
+          //   element: <RoleRoute allowed={["admin"]} />,
+          //   children: [
+          //     {
+          //       element: <AdminLayout />,
+          //       children: [
+          //         { path: "/admin/dashboard", element: <HomeAdmin /> }
+          //       ]
+          //     }
+          //   ]
+          // }
+        ]
+      },
       { path: "/403", element: <Forbidden /> },
       { path: "*", element: <NotFound /> },
     ]
