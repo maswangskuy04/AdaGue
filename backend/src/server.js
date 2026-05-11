@@ -1,38 +1,29 @@
-require('dotenv').config()
-const http = require('http')
-const app = require('./app')
-const sequelize = require('./config/db')
-const { Server } = require('socket.io')
-const initSocket = require('./socket')
+const nodemailer = require('nodemailer')
 
-const PORT = process.env.PORT || 5000
-
-const allowedOrigins = [
-    'http://localhost:5173',
-    'https://ada-gue.vercel.app'
-]
-
-async function start() {
-    try {
-        await sequelize.authenticate()
-        await sequelize.sync()
-
-        const server = http.createServer(app)
-        const io = new Server(server, {
-            cors: {
-                origin: allowedOrigins,
-                credentials: true
-            }
-        })
-
-        initSocket(io)
-    
-        server.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`)
-        })
-    } catch (err) {
-        console.error('Server failed: ', err)
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    family: 4,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
+})
+
+const sendOtpEmail = async (to, otp) => {
+    await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to,
+        subject: 'Your Verification Code',
+        html: `
+            <h3>Email Verification</h3>
+            <p>OTP Code:</p>
+            <h1>${otp}</h1>
+            <p>Berlaku 10 menit</p>
+        `
+    })
 }
 
-start()
+module.exports = { sendOtpEmail }
