@@ -51,13 +51,13 @@ const Header = ({ user, onlineStatus, isSearching, isMatched, logout }) => {
             <MenuItems
               anchor="bottom end"
               transition
-              className="mt-3 w-56 origin-top-right outline-none transition duration-200 ease-out data-closed:scale-95 data-closed:opacity-0"
+              className="mt-3 w-56 origin-top-right outline-none transition duration-200 ease-out data-closed:scale-95 data-closed:opacity-0 z-50"
             >
               <NeumorphismBox
                 variant=""
               >
                 {/* User Info */}
-                <div className="px-3 py-2 mb-2 rounded-2xl bg-white/40 shadow-[inset_2px_2px_6px_rgba(163,177,198,0.18),inset_-2px_-2px_6px_rgba(255,255,255,0.8)]">
+                <div className="px-3 py-2 mb-2 rounded-2xl shadow-[inset_2px_2px_6px_rgba(163,177,198,0.18),inset_-2px_-2px_6px_rgba(255,255,255,0.8)]">
                   <p className="text-sm font-semibold text-zinc-700 truncate">
                     {user.fullname || '-'}
                   </p>

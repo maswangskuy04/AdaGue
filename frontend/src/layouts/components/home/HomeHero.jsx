@@ -1,5 +1,6 @@
 import { useAuth } from "../../../context/AuthContext"
 import { useMatch } from "../../../context/MatchContext"
+import useOnlineCount from "../../../hooks/useOnlineCount"
 import { formatGreeting } from "../../../utils/date"
 import HeroActionButton from "./HeroActionButton"
 import { motion, AnimatePresence } from "motion/react"
@@ -45,6 +46,7 @@ const item = {
 const HomeHero = () => {
   const { user } = useAuth()
   const { isSearching } = useMatch()
+  const onlineCount = useOnlineCount()
 
   return (
     <section className="relative flex items-center justify-center min-h-[70vh] px-6">
@@ -60,33 +62,45 @@ const HomeHero = () => {
           >
             <motion.div
               variants={item}
-              className="space-y-2"
+              className="text-center space-y-5"
             >
-              <h1 className="text-[24px] sm:text-[30px] lg:text-[34px] text-center font-semibold tracking-[-0.03em] leading-tight text-[#8d96a5] select-none"
-                style={{
-                  textShadow: `
-                    -2px -2px 4px rgba(255,255,255,0.95),
-                    2px 2px 4px rgba(163,177,198,0.45)
-                  `,
-                }}
-              >
-                Selamat {formatGreeting()},{" "}
+              <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-full bg-[#eef1f5] shadow-[6px_6px_12px_rgba(163,177,198,0.18),-6px_-6px_12px_rgba(255,255,255,0.95)]">
+                <div className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
 
-                <span className="text-[#6f7888]">
-                  {user?.fullname}
-                </span>
-              </h1>
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                </div>
 
-              <p className="text-[13px] sm:text-[14px] lg:text-[15px] text-center font-medium tracking-[0.01em] text-[#a0a8b5] select-none"
-                style={{
-                  textShadow: `
-                    -1px -1px 2px rgba(255,255,255,0.9),
-                    1px 1px 2px rgba(163,177,198,0.28)
-                  `,
-                }}
-              >
-                Klik tombol untuk mulai pencarian partner.
-              </p>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm font-bold text-[#9aa3b2]">
+                    {onlineCount}
+                  </span>
+
+                  <span className="text-sm font-bold uppercase text-[#9aa3b2]">
+                    Online
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h1
+                  className="text-[34px] sm:text-[42px] lg:text-[52px] font-black tracking-tighter leading-none text-[#6f7888]"
+                  style={{
+                    textShadow: `
+                      -3px -3px 6px rgba(255,255,255,0.95),
+                      3px 3px 6px rgba(163,177,198,0.3)
+                    `,
+                  }}
+                >
+                  Selamat {formatGreeting()}
+                </h1>
+
+                <div className="inline-flex items-center px-5 py-3 rounded-2xl bg-[#eef1f5] shadow-[inset_3px_3px_6px_rgba(163,177,198,0.18),inset_-3px_-3px_6px_rgba(255,255,255,0.9)]">
+                  <span className="text-[20px] sm:text-[24px] font-bold tracking-[-0.03em] text-[#5d6573]">
+                    {user?.fullname}
+                  </span>
+                </div>
+              </div>
             </motion.div>
 
             <motion.div
