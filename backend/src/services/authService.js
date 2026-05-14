@@ -2,7 +2,7 @@ const { Op } = require("sequelize");
 const { User, Match } = require("../models");
 const { generateToken } = require("../utils/jwt");
 const { hashPassword, comparePassword } = require("../utils/password");
-const { sendOtpEmail } = require("./emailService");
+const { sendOtpEmail } = require('../services/emailService');
 const generateOtp = require("../utils/generateOtp");
 
 class AuthService {
