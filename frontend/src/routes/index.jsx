@@ -10,7 +10,7 @@ import Register from "../pages/auth/Register"
 import HomeUser from "../pages/user/home/HomeUser"
 import Forbidden from "../pages/errors/Forbidden"
 import NotFound from "../pages/errors/NotFound"
-// import ChatRoom from "../pages/user"
+import ChatRoom from "../pages/user/chat/ChatRoom"
 // import ProfilePage from "../pages/user"
 import VerifyOtpPage from "../layouts/components/verifyOtp/VerifyOtpPage"
 
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
                 children: [
                   { path: "/dashboard", element: <HomeUser /> },
                   // { path: "/profile", element: <ProfilePage /> },
-                  // { path: "/chat/:conversationId", element: <ChatRoom /> }
+                  { path: "/chat/:conversationId", element: <ChatRoom /> }
                 ]
               }
             ]
