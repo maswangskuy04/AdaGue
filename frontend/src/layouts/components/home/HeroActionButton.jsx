@@ -25,9 +25,8 @@ const HeroActionButton = () => {
   if (match) return null
 
   const getText = () => {
-    if (elapsed < 3) return "Mencari teman..."
+    if (elapsed < 3) return "Mencari partner..."
     if (elapsed < 7) return "Sabar broo..."
-    if (elapsed < 12) return "Nyari yang cocok dulu..."
     return "Sedikit lagi..."
   }
 
