@@ -37,9 +37,13 @@ const ProfileSection = ({ title, description, children }) => {
                 ease: "easeOut",
               }}
             >
-              <ChevronDown
-                className="h-4 w-4 text-indigo-500"
-              />
+              <NeumorphismBox
+                variant="button"
+              >
+                <ChevronDown
+                  className="h-4 w-4 text-indigo-500"
+                />
+              </NeumorphismBox>
             </motion.div>
           </DisclosureButton>
 
