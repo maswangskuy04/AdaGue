@@ -11,7 +11,7 @@ import HomeUser from "../pages/user/home/HomeUser"
 import Forbidden from "../pages/errors/Forbidden"
 import NotFound from "../pages/errors/NotFound"
 import ChatRoom from "../pages/user/chat/ChatRoom"
-// import ProfilePage from "../pages/user"
+import ProfilePage from "../pages/user/profile/ProfilePage"
 import VerifyOtpPage from "../layouts/components/verifyOtp/VerifyOtpPage"
 
 const router = createBrowserRouter([
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
                 element: <UserLayout />,
                 children: [
                   { path: "/dashboard", element: <HomeUser /> },
-                  // { path: "/profile", element: <ProfilePage /> },
+                  { path: "/profile", element: <ProfilePage /> },
                   { path: "/chat/:conversationId", element: <ChatRoom /> }
                 ]
               }

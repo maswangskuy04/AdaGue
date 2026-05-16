@@ -4,6 +4,8 @@ import AuthService from "../../../services/authService"
 import { useAlert } from "../../../hooks/useAlert"
 import OtpInput from "./OtpInput"
 import VerifyOtpActions from "./VerifyOtpActions"
+import { NeumorphismBox } from "../../../styles/components"
+import { Mail } from "lucide-react"
 
 const VerifyOtpPage = () => {
   const { state } = useLocation()
@@ -11,7 +13,8 @@ const VerifyOtpPage = () => {
 
   const [otp, setOtp] = useState("")
   const [loading, setLoading] = useState(false)
-  const { success, info, error } = useAlert()
+
+  const { success, error } = useAlert()
 
   const submitOtp = async () => {
     if (otp.length !== 6) {
@@ -21,12 +24,14 @@ const VerifyOtpPage = () => {
 
     try {
       setLoading(true)
+
       const res = await AuthService.verifyOtp({
         email: state.email,
-        otp
+        otp,
       })
-      navigate('/auth/login')
+
       success(res.message)
+      navigate("/auth/login")
     } catch (err) {
       error(err.message)
     } finally {
@@ -35,24 +40,37 @@ const VerifyOtpPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-100">
-      <div className="w-full max-w-sm p-6 rounded-xl shadow-lg bg-zinc-50">
-        <h1 className="text-xl font-semibold text-center">Email Verification</h1>
-        <p className="text-sm text-gray-500 text-center mt-2">Enter the OTP code sent to your email</p>
+    <div className="min-h-screen color-flows flex items-center justify-center px-4">
+      <NeumorphismBox
+        variant="card"
+        className="w-full max-w-md p-8"
+      >
+        <div className="text-center">
+          <NeumorphismBox
+            variant="inset"
+            className="mx-auto mb-5 flex h-16 w-16 items-center justify-center"
+          >
+            <Mail className="text-teal-500" />
+          </NeumorphismBox>
 
-        <OtpInput value={otp} onChange={setOtp} />
+          <h1 className="text-2xl font-semibold text-zinc-800">
+            Verify Email
+          </h1>
 
-        {error && (
-          <p className="text-red-500 text-sm text-center mt-2">
-            {error}
+          <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+            Enter the 6 digit OTP code sent to your email address
           </p>
-        )}
+        </div>
+
+        <div className="mt-8">
+          <OtpInput value={otp} onChange={setOtp} />
+        </div>
 
         <VerifyOtpActions
           loading={loading}
           onSubmit={submitOtp}
         />
-      </div>
+      </NeumorphismBox>
     </div>
   )
 }

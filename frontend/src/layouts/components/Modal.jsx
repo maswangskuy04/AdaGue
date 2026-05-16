@@ -1,18 +1,44 @@
-import { Button, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@headlessui/react"
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react"
+
 import { X } from "lucide-react"
 import { Fragment } from "react"
 
-const Modal = ({ open, onClose, title, children, size = 'md' }) => {
+import {
+  NeumorphismBox,
+} from "../../styles/components"
+
+const Modal = ({
+  open,
+  onClose,
+  title,
+  children,
+  size = "md",
+}) => {
   const sizeClass = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
+    sm: "max-w-sm",
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
   }
 
   return (
-    <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
+    <Transition
+      appear
+      show={open}
+      as={Fragment}
+    >
+      <Dialog
+        as="div"
+        className="relative z-50"
+        onClose={onClose}
+      >
+        {/* BACKDROP */}
         <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
@@ -22,38 +48,55 @@ const Modal = ({ open, onClose, title, children, size = 'md' }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/30 backdrop-blur-md" />
+          <div
+            className="fixed inset-0 bg-black/20 backdrop-blur-[3px]"
+          />
         </TransitionChild>
 
+        {/* MODAL */}
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-6 text-center">
+          <div className="flex min-h-full items-center justify-center p-5">
             <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95 translate-y-8"
+              enterFrom="opacity-0 scale-95 translate-y-6"
               enterTo="opacity-100 scale-100 translate-y-0"
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100 translate-y-0"
-              leaveTo="opacity-0 scale-95 translate-y-8"
+              leaveTo="opacity-0 scale-95 translate-y-6"
             >
-              <DialogPanel className={`w-full ${sizeClass[size] || sizeClass.md} text-left align-middle transition-all transform rounded-4xl bg-white/50 backdrop-blur-sm saturate-[1.8] border border-white/40 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] overflow-hidden outline-none`}>
-                {/* HEADER */}
-                <div className="flex items-center justify-between px-5 py-3 border-b border-black/15">
-                  <DialogTitle className="text-lg font-bold text-zinc-700 tracking-tight">
-                    {title}
-                  </DialogTitle>
-                  <button
-                    onClick={onClose}
-                    className="p-1.5 rounded-full bg-black/5 hover:bg-black/10 transition-colors outline-none"
-                  >
-                    <X size={18} className="text-zinc-600" />
-                  </button>
-                </div>
+              <DialogPanel
+                className={`
+                  w-full
+                  ${sizeClass[size] || sizeClass.md}
+                `}
+              >
+                <NeumorphismBox
+                  variant="card"
+                  className="overflow-hidden rounded-[32px] p-0"
+                >
+                  {/* HEADER */}
+                  <div className="flex items-center justify-between px-5 py-4">
+                    <DialogTitle
+                      className="text-base font-semibold tracking-tight text-zinc-700"
+                    >
+                      {title}
+                    </DialogTitle>
 
-                {/* CONTENT */}
-                <div className="p-5">
-                  {children}
-                </div>
+                    <NeumorphismBox
+                      as="button"
+                      onClick={onClose}
+                      variant="button"
+                      className="flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-500 transition-all hover:text-red-500 active:scale-[0.96]"
+                    >
+                      <X size={18} />
+                    </NeumorphismBox>
+                  </div>
+
+                  <div className="p-5">
+                    {children}
+                  </div>
+                </NeumorphismBox>
               </DialogPanel>
             </TransitionChild>
           </div>

@@ -1,5 +1,6 @@
 import { Input } from "@headlessui/react"
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import { NeumorphismCard } from "../../../styles/components"
 
 const OtpInput = ({ length = 6, value, onChange }) => {
   const inputsRef = useRef([])
@@ -16,14 +17,20 @@ const OtpInput = ({ length = 6, value, onChange }) => {
 
     // pindah ke input selanjutna
     if (index < length - 1) {
-      inputsRef.current[index + 1].focus()
+      inputsRef.current[index + 1]?.focus()
     }
   }
 
   const handleKeyDown = (e, index) => {
     if (e.key === 'Backspace') {
+      const newOtp = value.split('')
+      newOtp[index] = ''
+      
+      onChange(newOtp.join(''))
+
+      // balik ke input selanjutnya
       if (!value[index] && index > 0) {
-        inputsRef.current[index - 1].focus()
+        inputsRef.current[index - 1]?.focus()
       }
     }
   }
@@ -47,9 +54,12 @@ const OtpInput = ({ length = 6, value, onChange }) => {
           type="text"
           maxLength={1}
           value={value[i] || ''}
+          placeholder="-"
           onChange={(e) => handleChange(e, i)}
           onKeyDown={(e) => handleKeyDown(e, i)}
-          className="w-12 h-12 text-center text-xl border border-indigo-400 rounded-lg focus:outline-none focus:ring focus:ring-indigo-500"
+          className={`w-12 h-12 text-center text-xl border rounded-lg focus:outline-none transition-all duration-200
+            ${value[i] ? 'border-green-500 bg-green-50 text-green-600' : 'border-zinc-400 focus:ring focus:ring-zinc-500'}
+          `}
         />
       ))}
     </div>

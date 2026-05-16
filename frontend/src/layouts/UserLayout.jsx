@@ -6,8 +6,8 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 
 const statusActive = {
-  online: { label: "Online", color: "bg-emerald-500" },
-  offline: { label: "Offline", color: "bg-red-500" }
+  online: { label: "Online", color: "text-emerald-500" },
+  offline: { label: "Offline", color: "text-red-500" }
 }
 
 const UserLayout = () => {
